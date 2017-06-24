@@ -23,7 +23,7 @@ node default {
   }
 
   apache::vhost { 'stan.andrewjackson.io-ssl':
-    servername      => 'first.example.com',
+    servername      => 'stan.andrewjackson.io',
     port            => '443',
     docroot         => '/var/www/html',
     ssl             => true,
