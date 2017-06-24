@@ -1,0 +1,35 @@
+{
+  "variables": {
+    "aws_access_key": "",
+    "aws_secret_key": ""
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "access_key": "{{user `aws_access_key`}}",
+    "secret_key": "{{user `aws_secret_key`}}",
+    "region": "us-west-2",
+    "source_ami": "ami-b55a51cc",
+    "ssh_keypair_name": "StanKey",
+    "ssh_private_key_file": "StanKey.pem",
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "stan-web-{{timestamp}}"
+  }],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo rpm -ivh https://yum.puppetlabs.com/puppetlabs-release-el-7.noarch.rpm",
+        "sudo yum install puppet -y",
+        "sudo puppet module install puppetlabs-apache",
+        "sudo puppet module install ULHPC-openssl"
+      ]
+    },
+    {
+      "type": "puppet-masterless",
+      "manifest_file": "manifests/site.pp",
+      "extra_arguments": "--modulepath=/etc/puppet/modules",
+      "ignore_exit_codes": "true"
+    }
+  ]
+}
