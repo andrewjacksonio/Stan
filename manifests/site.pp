@@ -1,4 +1,4 @@
-node default { 
+node default {
   package { 'php':
     ensure => installed,
   }
@@ -11,8 +11,8 @@ node default {
 
   include apache::mod::php
 
-  apache::vhost { 'stan.andrewjackson.io-nonssl':    
-    port            => '80',    
+  apache::vhost { 'stan.andrewjackson.io-nonssl':
+    port            => '80',
     docroot         => '/var/www/html',
     directoryindex  => 'default.php',
     redirect_status => 'permanent',
@@ -53,7 +53,7 @@ node default {
 
   file { '/var/www/html/default.php':
     ensure  => file,
-    content => join([ 
+    content => join([
       '<?php',
       '$instance_id = file_get_contents("http://169.254.169.254/latest/meta-data/instance-id");',
       'echo $instance_id, "\n";',
