@@ -33,5 +33,11 @@
       "extra_arguments": "--modulepath=/etc/puppet/modules",
       "ignore_exit_codes": "true"
     }
+  ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "strip_path": true
+    }
   ]
 }
